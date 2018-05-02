@@ -1,14 +1,14 @@
 defmodule GameTest do
   use ExUnit.Case
+  alias Islands.{Guess, Game, Board}
 
-  test "placing the first island in the setup phase succeeds" do
-    move = {:place_island, %{type: :atoll, x: 0, y: 0}}
-    response = Game.play(%Game{}, move)
-    assert {:ok, %Game{moves: [^move]}} = response
+  describe "hit_or_miss?/2" do
+    test "processes hits" do
+      assert Game.hit_or_miss?(%Board{islands: [{0, 0}]}, %Guess{coordinates: {0, 0}})
+    end
+
+    test "processes misses" do
+      refute Game.hit_or_miss?(%Board{islands: [{0, 0}]}, %Guess{coordinates: {0, 1}})
+    end
   end
-
-  # test "placing a set of islands on the second turn fails" do
-  #   response = Game.play(%Game{}, {:place_islands, []})
-  #   assert response = :ok
-  # end
 end
