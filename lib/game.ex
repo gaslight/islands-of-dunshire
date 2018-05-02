@@ -1,8 +1,8 @@
-defmodule Game do
+defmodule Islands.Game do
+  alias __MODULE__
+  alias Islands.Guess
 
-  defstruct [:moves]
-
-  def play(game = %Game{}, move = {:place_island, _}) do
-    {:ok, %{game | moves: [move]}}
+  def hit_or_miss?(board, %Guess{coordinates: coordinates} = guess) do
+    coordinates in board.islands
   end
 end
