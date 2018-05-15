@@ -1,8 +1,7 @@
 defmodule Islands.Game do
-  alias __MODULE__
   alias Islands.{Board, Guess}
 
-  def hit_or_miss?(%Board{islands: islands}, %Guess{coordinates: coordinates} = guess) do
+  def hit_or_miss?(%Board{islands: islands}, %Guess{coordinates: coordinates}) do
     coordinates in islands
   end
 
