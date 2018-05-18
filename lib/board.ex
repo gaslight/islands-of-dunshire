@@ -1,10 +1,11 @@
 defmodule Islands.Board do
-  # @type coordinate :: {number, number}
-  # @type  t :: size: coordinate,
-  #             islands: list(coordinate),
-  #             hits: list(Guess.t())
+  alias __MODULE__
+  @type coordinates :: {number, number}
+  @type  t :: %Board{
+    islands: list(coordinates),
+    hits: list(coordinates)
+  }
 
-  defstruct size: {nil, nil},
-            islands: [],
+  defstruct islands: [],
             hits: []
 end

@@ -1,5 +1,8 @@
 defmodule Islands.Player do
-  # @type t :: name: String.t() | nil
+  alias __MODULE__
+  @type t :: %Player{
+    name: String.t() | nil
+  }
 
   defstruct name: nil
 end

@@ -29,11 +29,11 @@ defmodule GameTest do
 
   describe "player_turn/3" do
     test "player takes a turn and wins", %{player1: player1, board: board} do
-      assert Game.player_turn(player1, %Guess{coordinates: {0, 0}}, board) == "Player1 is the winner!"
+      assert Game.player_turn(%Guess{coordinates: {0, 0}, player: player1}, board) == "Player1 is the winner!"
     end
 
     test "player takes a turn and does not win", %{player1: player1, board: board} do
-      assert Game.player_turn(player1, %Guess{coordinates: {0, 1}}, board) == nil
+      assert Game.player_turn(%Guess{coordinates: {0, 1}, player: player1}, board) == nil
     end
   end
 end

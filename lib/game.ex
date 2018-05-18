@@ -1,7 +1,7 @@
 defmodule Islands.Game do
   alias Islands.{Board, Guess, Player}
 
-  def player_turn(player = %Player{}, guess = %Guess{}, board = %Board{}) do
+  def player_turn(guess = %Guess{player: player = %Player{}}, board = %Board{}) do
     board
     |> maybe_record_hit(guess)
     |> maybe_alert_winner(player)
