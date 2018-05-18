@@ -12,4 +12,8 @@ defmodule Islands.Island do
   def is_forested?(%Island{} = island) do
     MapSet.equal?(island.coordinates, island.hits)
   end
+
+  def add_hit(island, coordinate) do
+    %__MODULE__{island | hits: MapSet.put(island.hits, coordinate)}
+  end
 end

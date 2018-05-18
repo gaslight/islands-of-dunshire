@@ -13,4 +13,11 @@ defmodule Islands.IslandTest do
       assert Island.is_forested?(island)
     end
   end
+
+  describe "add_hit/2" do
+    test "places a coordinate on an island's hits property" do
+      island = %Island{coordinates: MapSet.new([{0, 0}])}
+      assert Island.add_hit(island, {0, 0}) == %Island{island | hits: MapSet.new([{0, 0}])}
+    end
+  end
 end
