@@ -48,6 +48,7 @@ defmodule GameTest do
     end
 
     test "player1 inputs a guess and wins game", %{board1: board1, board2: board2} do
+      GuessAgent.put_coords({"0", "0"})
       result = Game.play_game(board1, board2)
       assert result == "Player1 is the winner!"
     end
