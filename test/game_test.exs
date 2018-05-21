@@ -41,4 +41,15 @@ defmodule GameTest do
       assert Game.player_turn({0, 1}, board1) == nil
     end
   end
+
+  describe "play game" do
+    test "player1 wins game", %{board1: board1} do
+      assert Game.play_game(board1, %Board{}, 1, "Player1 is the winner!") == "Player1 is the winner!"
+    end
+
+    test "player1 inputs a guess and wins game", %{board1: board1, board2: board2} do
+      result = Game.play_game(board1, board2)
+      assert result == "Player1 is the winner!"
+    end
+  end
 end
