@@ -1,39 +1,44 @@
 defmodule GameTest do
   use ExUnit.Case
-  alias Islands.{Board, Game, Guess, Player}
+  alias Islands.{Board, Game, Player}
 
   setup do
-    {:ok, %{player1: %Player{name: "Player1"}, board: %Board{islands: [{0, 0}]}}}
+    player1 = %Player{name: "Player1"}
+    player2 = %Player{name: "Player2"}
+    board1 = %Board{player: player1, islands: [{0, 0}]}
+    board2 = %Board{player: player2, islands: [{0, 1}]}
+    {:ok, %{board1: board1, board2: board2}}
   end
 
   describe "maybe_record_hit/2" do
-    test "processes hits", %{board: board} do
-      assert Game.maybe_record_hit(board, %Guess{coordinates: {0, 0}}) == %Board{islands: [{0, 0}], hits: [{0, 0}]}
+    test "processes hits", %{board1: board1} do
+      assert Game.maybe_record_hit(board1, {0, 0}) == %Board{board1 | hits: [{0, 0}]}
     end
 
-    test "processes misses", %{board: board} do
-      assert Game.maybe_record_hit(board, %Guess{coordinates: {0, 1}}) == board
+    test "processes misses", %{board1: board1} do
+      assert Game.maybe_record_hit(board1, {0, 1}) == board1
     end
   end
 
   describe "maybe_alert_winner/2" do
-    test "processes winning game", %{player1: player1} do
-      assert Game.maybe_alert_winner(%Board{islands: [{0, 0}], hits: [{0, 0}]}, player1) == "Player1 is the winner!"
+    test "processes winning game", %{board1: board1} do
+      assert Game.maybe_alert_winner(%Board{board1 | hits: [{0, 0}]}) == "Player1 is the winner!"
     end
 
-    test "processes non winning game", %{player1: player1} do
-      assert Game.maybe_alert_winner(%Board{islands: [{0, 0}], hits: []}, player1) == nil
-      assert Game.maybe_alert_winner(%Board{islands: [{0, 0}, {0, 1}], hits: [{0, 0}]}, player1) == nil
+    test "processes non winning game", %{board1: board1} do
+      assert Game.maybe_alert_winner(%Board{board1 | hits: []}) == nil
+      updated_board = %Board{board1 | islands: [{0, 0}, {0, 1}]}
+      assert Game.maybe_alert_winner(%Board{updated_board | hits: [{0, 0}]}) == nil
     end
   end
 
   describe "player_turn/3" do
-    test "player takes a turn and wins", %{player1: player1, board: board} do
-      assert Game.player_turn(%Guess{coordinates: {0, 0}, player: player1}, board) == "Player1 is the winner!"
+    test "player takes a turn and wins", %{board1: board1} do
+      assert Game.player_turn({0, 0}, board1) == "Player1 is the winner!"
     end
 
-    test "player takes a turn and does not win", %{player1: player1, board: board} do
-      assert Game.player_turn(%Guess{coordinates: {0, 1}, player: player1}, board) == nil
+    test "player takes a turn and does not win", %{board1: board1} do
+      assert Game.player_turn({0, 1}, board1) == nil
     end
   end
 end
