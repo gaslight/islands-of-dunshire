@@ -2,6 +2,7 @@ defmodule IslandsOfDunshire.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  import Supervisor.Spec
 
   use Application
 
@@ -10,6 +11,7 @@ defmodule IslandsOfDunshire.Application do
     children = [
       # Starts a worker by calling: IslandsOfDunshire.Worker.start_link(arg)
       # {IslandsOfDunshire.Worker, arg},
+      worker(GuessAgent, [], restart: :permanent)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
