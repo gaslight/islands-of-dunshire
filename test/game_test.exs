@@ -7,6 +7,7 @@ defmodule GameTest do
     player2 = %Player{name: "Player2"}
     board1 = %Board{player: player1, islands: [{0, 0}]}
     board2 = %Board{player: player2, islands: [{0, 1}]}
+    GuessAgent.reset()
     {:ok, %{board1: board1, board2: board2}}
   end
 
@@ -48,7 +49,28 @@ defmodule GameTest do
     end
 
     test "player1 inputs a guess and wins game", %{board1: board1, board2: board2} do
-      GuessAgent.put_coords({"0", "0"})
+      GuessAgent.put_coords(%{"1" => "0,0"})
+      result = Game.play_game(board1, board2)
+      assert result == "Player1 is the winner!"
+    end
+
+    test "player1 misses, player2 hits and wins game", %{board1: board1, board2: board2} do
+      turns = %{
+        "1" => "0,1",
+        "2" => "0,1"
+      }
+      GuessAgent.put_coords(turns)
+      result = Game.play_game(board1, board2)
+      assert result == "Player2 is the winner!"
+    end
+
+    test "player1 misses, player2 misses, player1 hits and wins game", %{board1: board1, board2: board2} do
+      turns = %{
+        "1" => "0,1",
+        "2" => "0,0",
+        "3" => "0,0"
+      }
+      GuessAgent.put_coords(turns)
       result = Game.play_game(board1, board2)
       assert result == "Player1 is the winner!"
     end

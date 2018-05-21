@@ -34,8 +34,7 @@ defmodule Islands.Game do
   def play_game(%Board{}, %Board{}, _turn_count, message), do: message
 
   def get_guess_coords() do
-    x_coord = "Enter your X coord: " |> @io.gets |> String.trim
-    y_coord = "Enter your Y coord: " |> @io.gets |> String.trim
+    [x_coord, y_coord] = "Enter your X,Y guess coords: " |> @io.gets |> String.trim |> String.split(",")
     {String.to_integer(x_coord), String.to_integer(y_coord)}
   end
 end
